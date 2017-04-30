@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    >
+<head>
+    <title>News Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+
+<p>There you can find news</p>
+
+<form action="#" th:action="@{/findByNews}" th:object="${object}" method="post">
+    <table>
+        <tr>
+            <td>Find news by category:</td>
+            <td><input type="text" th:field="*{category}" /></td>
+        </tr>
+
+        <tr>
+            <td><button type="submit">Find</button></td>
+        </tr>
+    </table>
+</form>
+    <ul th:each="token : ${repo}">
+        <li th:text="${token.title}" > Title</li>
+        <li th:text="${token.category}" > Category</li>
+        <li th:text="${token.content}">Content</li>
+        <li th:text="${token.date}">DateTime</li>
+    </ul>
+
+    <p th:text="${error}"> </p>
+
+    <form action="#" th:action="@{/add}" th:object="${object}" method="post">
+        <table>
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" th:field="*{title}" /></td>
+            </tr>
+
+            <tr>
+                <td>Category:</td>
+                <td><input type="text" th:field="*{category}" /></td>
+            </tr>
+
+            <tr>
+                <td>Content:</td>
+                <td><input type="text" th:field="*{content}" /></td>
+            </tr>
+
+
+            <tr>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <p>There you can delele news</p>
+
+    <form action="#" th:action="@{/delete}" th:object="${object}" method="post">
+        <table>
+            <tr>
+                <td>Delete news by title:</td>
+                <td><input type="text" th:field="*{title}" /></td>
+            </tr>
+
+            <tr>
+                <td><button type="submit">Delete</button></td>
+            </tr>
+        </table>
+    </form>
+
+
+
+
+
+
+</body>
+</html>
