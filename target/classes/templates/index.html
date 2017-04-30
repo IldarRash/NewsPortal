@@ -10,11 +10,13 @@
 
 <p>There you can find news</p>
 
-<form action="#" th:action="@{/findByNews}" th:object="${object}" method="post">
+<form action="#" th:action="@{/findByCategory}" th:object="${object}" method="post">
     <table>
         <tr>
             <td>Find news by category:</td>
-            <td><input type="text" th:field="*{category}" /></td>
+            <select th:field="*{category}">
+                <option th:each="token:${repo}" th:value="${token.category}" th:text="${token.category}"/>
+            </select>
         </tr>
 
         <tr>
@@ -22,11 +24,34 @@
         </tr>
     </table>
 </form>
-    <ul th:each="token : ${repo}">
-        <li th:text="${token.title}" > Title</li>
-        <li th:text="${token.category}" > Category</li>
-        <li th:text="${token.content}">Content</li>
-        <li th:text="${token.date}">DateTime</li>
+
+<form action="#" th:action="@{/findByTitleOrContent}" th:object="${object}" method="post">
+    <table>
+        <tr>
+            <td>Find news by category:</td>
+            <select th:field="*{category}">
+                <option  value="title">Find by title</option>
+                <option value="content">Find by content</option>
+            </select>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{title}" /></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Find</button></td>
+        </tr>
+    </table>
+</form>
+
+<p> There is a list of all News </p>
+<ul class="list-group" >
+
+        <li class="list-group" th:each="token : ${repo}" >
+            <br th:text="${token.title}" />
+            <br th:text="${token.category}"/>
+            <br th:text="${token.content}"/>
+            <br th:text="${token.date}"/>
+        </li>
     </ul>
 
     <p th:text="${error}"> </p>
@@ -55,6 +80,14 @@
         </table>
     </form>
 
+    <p>There you can update news </p>
+    <form action="#" th:action="@{/updateNews}" th:object="${object}" method="post">
+        <table>
+            <tr>
+                <td><button type="submit">Go to update</button></td>
+            </tr>
+        </table>
+    </form>
     <p>There you can delele news</p>
 
     <form action="#" th:action="@{/delete}" th:object="${object}" method="post">

@@ -25,8 +25,25 @@ public class NewsController extends WebMvcConfigurerAdapter {
     @Autowired
     private NewsService service;
 
-
-
+    @RequestMapping("/update")
+    public String update(@Valid News object,BindingResult bindingResult,Model model){
+        Long id =(Long)bindingResult.getRawFieldValue("id");
+        News m_news = service.getNewsById(id);
+        m_news.title = (String)bindingResult.getRawFieldValue("title");
+        m_news.category = (String)bindingResult.getRawFieldValue("category");
+        m_news.content = (String)bindingResult.getRawFieldValue("content");
+        m_news.date=new Date();
+        service.saveNews(m_news);
+        model.addAttribute("object",object);
+        model.addAttribute("repo",service.findAllNews());
+        return "index";
+    }
+    @RequestMapping("/updateNews")
+    public String updateNews(@Valid News token,BindingResult bindingResult,Model model){
+        model.addAttribute("token",new News());
+        model.addAttribute("repo",service.findAllNews());
+        return "update";
+    }
 
     @RequestMapping("/")
     public String homePage(@Valid News object, BindingResult bindingResult,Model model) {
@@ -65,18 +82,28 @@ public class NewsController extends WebMvcConfigurerAdapter {
 
     @PostMapping("/delete")
     public String deleteByTitle(@Valid News object, BindingResult bindingResult, Model model){
-
         service.deleteNewsByTitle((String)bindingResult.getRawFieldValue("title"));
         model.addAttribute("object",object);
         model.addAttribute("repo",service.findAllNews());
         return "index";
     }
 
-    @PostMapping("/findByNews")
+    @PostMapping("/findByCategory")
     public String findByCategory(@Valid News object, BindingResult bindingResult, Model model){
-
         model.addAttribute("object",object);
         model.addAttribute("repo",service.findAllNewsByCategory((String)bindingResult.getRawFieldValue("category")));
+        return "index";
+    }
+
+    @PostMapping("/findByTitleOrContent")
+    public String findByTitleOrContent(@Valid News object, BindingResult bindingResult, Model model){
+        model.addAttribute("object",object);
+        String result = (String)bindingResult.getRawFieldValue("category");
+        if(result.equals("title")){
+            model.addAttribute("repo",service.findAllNewsByTitle((String)bindingResult.getRawFieldValue("title")));
+        }else{
+            model.addAttribute("repo",service.findAllNewsByContent((String)bindingResult.getRawFieldValue("title")));
+        }
         return "index";
     }
 

@@ -17,10 +17,10 @@ public class News {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    public long id;
     @NotNull
     @Size(min=2, max=30)
-    @Column(name = "title")
+    @Column(name = "title",unique = true)
     public String title;
     @NotNull
     @Size(min=2, max=30)

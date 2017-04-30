@@ -9,8 +9,13 @@ import java.util.List;
  * Created by ilsac on 30.04.2017.
  */
 public interface NewsRepository extends PagingAndSortingRepository<News, Long> {
+
+
     void removeByTitle(String title);
     List<News> findByCategory(String category);
     List<News> findAll();
-
+    List<News> findByTitle(String title);
+    List<News> findByContent(String content);
+    News findById(Long id);
+    void removeById(Long id);
 }

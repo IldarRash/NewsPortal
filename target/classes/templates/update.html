@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title>Update News</title>
+</head>
+<body>
+<p> Update fields </p>
+<form action="#" th:action="@{/update}" th:object="${token}" method="post">
+    <table>
+
+        <tr>
+            <td>Select id:</td>
+            <select th:field="*{id}">
+                <option th:each="token:${repo}" th:value="${token.id}" th:text="${token.id}"/>
+            </select>
+        </tr>
+
+        <tr>
+            <td>Title:</td>
+            <td><input type="text" th:field="*{title}" /></td>
+        </tr>
+
+        <tr>
+            <td>Category:</td>
+            <td><input type="text" th:field="*{category}"  /></td>
+        </tr>
+
+        <tr>
+            <td>Content:</td>
+            <td><input type="text" th:field="*{content}"  /></td>
+        </tr>
+
+
+        <tr>
+            <td><button type="submit">Update</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
